@@ -1,6 +1,5 @@
 # b07lab1
 b07lab1 9.16
-package hi;
 
 public class Polynomial {
 	public double[] coefficients;
