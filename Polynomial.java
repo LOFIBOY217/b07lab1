@@ -1,18 +1,44 @@
 package Driver;
 
-public class Driver {
-	public static void main(String [] args) {
-		Polynomial p = new Polynomial();
-		System.out.println(p.evaluate(3));
-		double [] c1 = {6,0,0,5};
-		Polynomial p1 = new Polynomial(c1);
-		double [] c2 = {0,-2,0,0,-9};
-		Polynomial p2 = new Polynomial(c2); 
-		Polynomial s = p1.Add(p2);
-		System.out.println("s(0.1) = " + s.evaluate(0.1)); 
-		if(s.hasRoot(1))
-			System.out.println("1 is a root of s");
-		else
-			System.out.println("1 is not a root of s");
+public class Polynomial {
+	public double[] coefficients;
+	
+	public Polynomial() {
+		coefficients = new double[1];
+		coefficients[0] = 0;
+	}
+	
+	public Polynomial(double[] co) {
+		coefficients = new double[co.length];
+		coefficients = co.clone();
+	}
+	
+	public Polynomial Add(Polynomial Po) {
+		int max_length = Math.max(this.coefficients.length, Po.coefficients.length);
+		double[] result_co = new double[max_length];
+		
+		for (int i = 0; i < max_length; i++) {
+			result_co[i] = 0;
+			if (i < this.coefficients.length){
+				result_co[i] += this.coefficients[i];
+			}
+			if (i < Po.coefficients.length) {
+				result_co[i] += Po.coefficients[i];
+			}
+		}
+		return new Polynomial(result_co);
+	}
+	
+	public double evaluate(double arg) {
+		double result = 0;
+		for (int i = 0; i < this.coefficients.length; i++) {
+			result += this.coefficients[i] * Math.pow(arg, i);
+		}
+		return result;
+	}
+	
+	public boolean hasRoot(double arg) {
+		return evaluate(arg) == 0;
 	}
 }
+
